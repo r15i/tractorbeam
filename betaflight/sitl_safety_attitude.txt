@@ -1,0 +1,7 @@
+feature GPS
+set gps_provider = VIRTUAL
+set debug_mode = ATTITUDE
+set runaway_takeoff_prevention = OFF
+aux 0 0 0 1700 2100 0
+aux 1 46 1 1700 2100 0
+save

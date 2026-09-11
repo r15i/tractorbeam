@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+paper/figures/*.png
+paper/Final_Report.pdf
+paper/Final_Report.docx
+paper/Final_Report.tex
+paper/Final_Report.aux
+paper/Final_Report.log
+/results/
+
+# Session scratch / old-session throwaway scripts
+scratch/
