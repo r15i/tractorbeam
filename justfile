@@ -1,6 +1,6 @@
-# Full reproduction: clean, run every experiment, then build the report.
+# Full reproduction: clean, run every experiment, then generate the figures.
 # This is the complete pipeline every table and figure in the paper depends on.
-all: clean simulate false-home rf-rl scenario report
+all: clean simulate false-home rf-rl scenario
 
 # Compile only the Betaflight SITL firmware (GPS Rescue sanity-check controller).
 build-sitl:
@@ -16,8 +16,6 @@ clean:
 	# Only the generated PNGs - keep the .dot architecture-diagram sources
 	# (tracked in git; make_figures.py re-renders them to PNG).
 	rm -f paper/figures/*.png
-	rm -f paper/Final_Report.docx paper/Final_Report.tex paper/Final_Report.pdf
-	rm -f paper/Final_Report.aux paper/Final_Report.log
 	rm -f betaflight/eeprom.bin
 	find . -type d -name "__pycache__" -exec rm -rf {} +
 	find . -type f -name "*.pyc" -delete
@@ -103,11 +101,6 @@ figures:
 	PYTHONPATH=src uv run python tools/make_figures.py
 
 # Fills Project Template.docx and emits/compiles the LaTeX version
-report: figures
-	PYTHONPATH=src uv run python tools/generate_report.py
-
-# Skips figure regeneration; run `just figures` after changing plot data.
-# Live preview: open the report and rebuild it on every save
 watch:
 	PYTHONPATH=src uv run python tools/watch_paper.py
 

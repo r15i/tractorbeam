@@ -1,0 +1,16 @@
+digraph G {
+    rankdir=LR;
+    nodesep=0.3;
+    ranksep=0.4;
+    margin=0;
+    node [shape=box, style=filled, fillcolor=white, fontname="sans-serif", margin="0.1,0.1"];
+    edge [fontname="sans-serif", fontsize=9];
+
+    Harness [label="Custom Physics Engine\n(Python 3.12)", fillcolor="#e0e0e0"];
+    Spoofer [label="Attack Injector\n(Spoofed Offsets)", fillcolor="#ffcccc", shape=oval];
+    SITL [label="Betaflight SITL\n(C Firmware)", fillcolor="#e0e0ff"];
+
+    Harness -> Spoofer [label=" True Kinematics"];
+    Spoofer -> SITL [label=" Fake GPS/IMU (UDP)"];
+    SITL -> Harness [label=" Motor PWM (TCP)"];
+}

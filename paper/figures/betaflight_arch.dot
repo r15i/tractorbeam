@@ -1,0 +1,22 @@
+digraph G {
+    rankdir=TB;
+    nodesep=0.2;
+    ranksep=0.25;
+    margin=0;
+    node [shape=box, style=filled, fillcolor=white, fontname="sans-serif", margin="0.05,0.05", height=0.3];
+    edge [fontname="sans-serif", fontsize=9];
+    
+    Sensors [label="GPS & IMU Data", fillcolor="#e0e0e0"];
+    Est [label="Basic Position Estimator"];
+    Rescue [label="GPS Rescue\n(Fixed Home Point)"];
+    Sanity [label="Rate-of-Change\nSanity Checks", fillcolor="#ffcccc"];
+    Motors [label="Motor Control", fillcolor="#e0e0e0"];
+    
+    Sensors -> Est;
+    Est -> Rescue [label=" Decoupled"];
+    Rescue -> Sanity [label=" Target"];
+    Sanity -> Motors [label=" Pass"];
+    Sanity -> "Failsafe Drop" [label=" Fail (20 ticks)", style=dashed, color=red];
+    
+    "Failsafe Drop" [shape=oval, style=filled, fillcolor="#ff9999"];
+}

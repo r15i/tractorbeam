@@ -1,0 +1,33 @@
+digraph AttackLogic {
+    rankdir=TD;
+    dpi=300;
+    node [shape=box, style="rounded,filled", fontname="Helvetica", fillcolor="#f9f9f9"];
+    edge [fontname="Helvetica", fontsize=10];
+
+    Start [label="Start GPS Spoofing Attack", shape=ellipse, fillcolor="#ffcc80"];
+    
+    subgraph cluster_vert {
+        label="1. Vertical Channel (RESCUE_ATTAIN_ALT)";
+        style=dashed; color=gray; fontname="Helvetica-Bold";
+        InjectAlt [label="Inject fake altitude climbing\nat >= 110% of firmware target\n(sanity_check_experiment.py)", fillcolor="#e1f5fe"];
+        BypassVert [label="Bypass Vertical Sanity Check\n(Avoids RESCUE_STALLED)", fillcolor="#c8e6c9"];
+        InjectAlt -> BypassVert;
+    }
+    
+    subgraph cluster_horiz {
+        label="2. Horizontal Channel (RESCUE_FLY_HOME)";
+        style=dashed; color=gray; fontname="Helvetica-Bold";
+        InjectHoriz [label="Inject fake GPS positions shrinking\ndistance to Home (rate-matched)\n(horizontal_gate_experiment.py)", fillcolor="#e1f5fe"];
+        InjectPitch [label="Inject fake forward pitch\n& matching accelerometer tilt", fillcolor="#e1f5fe"];
+        BypassHoriz [label="Bypass Horizontal Sanity Check\n(Avoids RESCUE_FLYAWAY)", fillcolor="#c8e6c9"];
+        InjectHoriz -> BypassHoriz;
+        InjectPitch -> BypassHoriz;
+    }
+    
+    Hijack [label="Hijack Successful!\nDrone lands at attacker destination", shape=ellipse, fillcolor="#ffab91", margin="0.2,0.2"];
+
+    Start -> InjectAlt;
+    BypassVert -> InjectHoriz [label=" Phase Transition"];
+    BypassVert -> InjectPitch [label=" Preconditions"];
+    BypassHoriz -> Hijack;
+}

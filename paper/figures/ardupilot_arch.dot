@@ -1,0 +1,22 @@
+digraph G {
+    rankdir=TB;
+    nodesep=0.2;
+    ranksep=0.25;
+    margin=0;
+    node [shape=box, style=filled, fillcolor=white, fontname="sans-serif", margin="0.05,0.05", height=0.3];
+    edge [fontname="sans-serif", fontsize=9];
+    
+    Sensors [label="GPS & IMU Data", fillcolor="#e0e0e0"];
+    EKF [label="Extended Kalman Filter"];
+    Innov [label="Innovation Variance\nStatistical Check", fillcolor="#ffcccc"];
+    ITP [label="ITP Tracking"];
+    Motors [label="Motor Control", fillcolor="#e0e0e0"];
+    
+    Sensors -> EKF;
+    EKF -> Innov [label=" Cross-check"];
+    Innov -> ITP [label=" Pass"];
+    Innov -> "Failsafe Drop" [label=" Fail (>0.8 var)", style=dashed, color=red];
+    ITP -> Motors;
+    
+    "Failsafe Drop" [shape=oval, style=filled, fillcolor="#ff9999"];
+}

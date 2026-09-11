@@ -1,0 +1,14 @@
+digraph RL {
+    rankdir=LR;
+    nodesep=0.5;
+    ranksep=0.8;
+    margin=0.1;
+    node [shape=box, style="rounded,filled", fontname="sans-serif", margin="0.2,0.1"];
+    edge [fontname="sans-serif", fontsize=9];
+
+    Env [label="RF Environment\n(Free-Space Path Loss, Noise)", fillcolor="#e0e0e0"];
+    Agent [label="Soft Actor-Critic (RL)\n(Policy & Q-Networks)", fillcolor="#cce5ff"];
+
+    Agent -> Env [label=" Action:\nTx Power [dBm]"];
+    Env -> Agent [label=" State: Range [m], Rx SNR\nReward: +Lock, -Power"];
+}
