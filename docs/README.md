@@ -1,5 +1,8 @@
 # Documentation
 
+> **Note:** This documentation is designed as an [Obsidian](https://obsidian.md/) vault. Opening the `docs/` directory in Obsidian will enable wiki-links, graph views, and the best reading experience.
+
+
 ## Index
 
 ### Project (goals, history, security analysis)
